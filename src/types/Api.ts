@@ -1,14 +1,26 @@
+export interface IResults {
+    name: string;
+    id: number;
+    image: string;
+    species: string;
+    episode: string[];
+}
+
+export interface IData {
+    results: IResults[];
+}
+
 export interface CharacterProps {
     isPending: boolean;
     isError: boolean;
-    data: {
-        results: Array<{
-            name: string;
-            id: number;
-            image: string;
-            species: string;
-            episode: string[];
-            results: Array<string>;
-        }>;
-    };
+    data: IData;
+}
+
+export interface UseFetchProps {
+    (
+        url: string,
+        setData: (data: [] | IData) => void,
+        setIsPending: (isPending: boolean) => void,
+        setIsError: (isError: boolean) => void,
+    ): void;
 }

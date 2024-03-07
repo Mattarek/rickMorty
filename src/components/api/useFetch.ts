@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { UseFetchProps } from '../../types/Api';
 
-export const useFetch = (url: string) => {
-    const [data, setData] = useState(null);
-    const [isPending, setIsPending] = useState(true);
-    const [isError, setIsError] = useState(false);
-
+export const useFetch: UseFetchProps = (
+    url,
+    setData,
+    setIsPending,
+    setIsError,
+) => {
     useEffect(() => {
+        setIsPending(true);
         const fetchData = async () => {
-            setIsPending(true);
             try {
                 const response = await fetch(url);
-                const result = await response.json();
-                setData(result);
+                const { results } = await response.json();
+                console.log(results);
+                setData(results);
             } catch (error) {
                 setIsError(true);
                 throw error;
-            } finally {
-                setIsPending(false);
             }
         };
 
         fetchData();
+        setIsPending(false);
     }, [url]);
-
-    return { data, isPending, isError };
 };
