@@ -41,10 +41,14 @@
     color: #888;
 }
 
-li {
-    display: inline-block;
-    list-style: none;
+.CharacterViews {
+    max-width: 15rem;
 }
 
 .CharacterViews li {
+    display: inline-block;
+}
+
+li {
+    list-style: none;
 }

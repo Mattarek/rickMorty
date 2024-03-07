@@ -1,7 +1,7 @@
 import './App.css';
 
 import { useState } from 'react';
-import { Character } from './components/character/Character';
+import { Character } from './components/Characters';
 import { URLS } from './constant/api';
 import { useFetch } from './components/api/useFetch';
 
@@ -11,6 +11,7 @@ function App() {
     const [isError, setIsError] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [hideEpisode, setHideEpisode] = useState(false);
+
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };

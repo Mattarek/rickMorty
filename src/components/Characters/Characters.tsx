@@ -44,21 +44,26 @@ export const Character = ({
                                 <div>{name}</div>
                                 <div>Gender: {gender}</div>
                                 <div>Species: {species}</div>
-                                <ul className='CharacterViews'>
-                                    Seen in episodes:{' '}
-                                    {hideEpisode &&
-                                        episode.map((element, index) => (
-                                            <li key={element}>
-                                                {`${extractEpisodeNumber(
-                                                    element,
-                                                )}${
-                                                    index < episode.length - 1
-                                                        ? ','
-                                                        : ''
-                                                }`}
-                                            </li>
+                                {hideEpisode && (
+                                    <ul className='CharacterViews'>
+                                        Seen in episodes:{' '}
+                                        {episode.map((element, index) => (
+                                            <>
+                                                <li key={element}>
+                                                    {`${extractEpisodeNumber(
+                                                        element,
+                                                    )}${
+                                                        index <
+                                                        episode.length - 1
+                                                            ? ','
+                                                            : ''
+                                                    }`}
+                                                </li>
+                                            </>
                                         ))}
-                                </ul>
+                                    </ul>
+                                )}
+                                <br />
                             </li>
                         ),
                     )
