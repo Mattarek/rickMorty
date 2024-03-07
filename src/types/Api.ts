@@ -16,4 +16,5 @@ export interface CharacterProps {
     isPending: boolean;
     isError: boolean;
     data: IData;
+    searchTerm: string;
 }

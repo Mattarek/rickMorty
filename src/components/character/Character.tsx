@@ -1,6 +1,11 @@
 import { CharacterProps, IResults } from '../../types/Api';
 
-export const Character = ({ isPending, isError, data }: CharacterProps) => {
+export const Character = ({
+    isPending,
+    isError,
+    data,
+    searchTerm,
+}: CharacterProps) => {
     console.log(data && data.results);
 
     const extractEpisodeNumber = (episode: string) => {
@@ -15,38 +20,44 @@ export const Character = ({ isPending, isError, data }: CharacterProps) => {
             ) : isError ? (
                 <div>Error occurred while fetching data.</div>
             ) : (
-                data?.results?.map(
-                    ({
-                        name,
-                        id,
-                        image,
-                        species,
-                        episode,
-                        gender,
-                    }: IResults) => (
-                        <li key={id}>
-                            <img
-                                src={image}
-                                alt='Image of character'
-                            />
-                            <div>{name}</div>
-                            <div>Gender: {gender}</div>
-                            <div>Species: {species}</div>
-                            <ul>
-                                Seen in episodes:{' '}
-                                {episode.map((element, index) => (
-                                    <li key={element}>
-                                        {`${extractEpisodeNumber(element)}${
-                                            index < episode.length - 1
-                                                ? ','
-                                                : ''
-                                        }`}
-                                    </li>
-                                ))}
-                            </ul>
-                        </li>
-                    ),
-                )
+                data?.results
+                    ?.filter((element) => {
+                        const lowercaseName = element.name.toLowerCase();
+                        const lowercaseSearchTerm = searchTerm.toLowerCase();
+                        return lowercaseName.includes(lowercaseSearchTerm);
+                    })
+                    .map(
+                        ({
+                            name,
+                            id,
+                            image,
+                            species,
+                            episode,
+                            gender,
+                        }: IResults) => (
+                            <li key={id}>
+                                <img
+                                    src={image}
+                                    alt='Image of character'
+                                />
+                                <div>{name}</div>
+                                <div>Gender: {gender}</div>
+                                <div>Species: {species}</div>
+                                <ul>
+                                    Seen in episodes:{' '}
+                                    {episode.map((element, index) => (
+                                        <li key={element}>
+                                            {`${extractEpisodeNumber(element)}${
+                                                index < episode.length - 1
+                                                    ? ','
+                                                    : ''
+                                            }`}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ),
+                    )
             )}
         </ul>
     );

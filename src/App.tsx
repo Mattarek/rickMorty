@@ -9,11 +9,24 @@ function App() {
     const [data, setData] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
 
     useFetch(URLS.API_URI_CHARACTERS, setData, setIsPending, setIsError);
 
     return (
         <>
+            <div>
+                <input
+                    type='text'
+                    placeholder='Search by name'
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+            </div>
             {isPending ? (
                 <div>Loading...</div>
             ) : isError ? (
@@ -24,6 +37,7 @@ function App() {
                         data={data}
                         isPending={isPending}
                         isError={isError}
+                        searchTerm={searchTerm}
                     />
                 )
             )}
