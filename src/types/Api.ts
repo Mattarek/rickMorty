@@ -17,4 +17,5 @@ export interface CharacterProps {
     isError: boolean;
     data: IData;
     searchTerm: string;
+    hideEpisode: boolean;
 }

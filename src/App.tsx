@@ -10,7 +10,7 @@ function App() {
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const [hideEpisode, setHideEpisode] = useState(false);
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
@@ -27,6 +27,9 @@ function App() {
                     onChange={handleSearchChange}
                 />
             </div>
+            <button onClick={() => setHideEpisode(!hideEpisode)}>
+                {hideEpisode ? <p>Hide</p> : <p>Show</p>}
+            </button>
             {isPending ? (
                 <div>Loading...</div>
             ) : isError ? (
@@ -38,6 +41,7 @@ function App() {
                         isPending={isPending}
                         isError={isError}
                         searchTerm={searchTerm}
+                        hideEpisode={hideEpisode}
                     />
                 )
             )}

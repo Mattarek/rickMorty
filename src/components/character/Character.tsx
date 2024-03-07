@@ -5,6 +5,7 @@ export const Character = ({
     isError,
     data,
     searchTerm,
+    hideEpisode,
 }: CharacterProps) => {
     console.log(data && data.results);
 
@@ -43,17 +44,20 @@ export const Character = ({
                                 <div>{name}</div>
                                 <div>Gender: {gender}</div>
                                 <div>Species: {species}</div>
-                                <ul>
+                                <ul className='CharacterViews'>
                                     Seen in episodes:{' '}
-                                    {episode.map((element, index) => (
-                                        <li key={element}>
-                                            {`${extractEpisodeNumber(element)}${
-                                                index < episode.length - 1
-                                                    ? ','
-                                                    : ''
-                                            }`}
-                                        </li>
-                                    ))}
+                                    {hideEpisode &&
+                                        episode.map((element, index) => (
+                                            <li key={element}>
+                                                {`${extractEpisodeNumber(
+                                                    element,
+                                                )}${
+                                                    index < episode.length - 1
+                                                        ? ','
+                                                        : ''
+                                                }`}
+                                            </li>
+                                        ))}
                                 </ul>
                             </li>
                         ),
