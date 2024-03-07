@@ -1,9 +1,10 @@
 import './App.css';
 
 import { useState } from 'react';
-import { Character } from './components/Characters';
+import { Characters } from './components/Characters';
 import { URLS } from './constant/api';
 import { useFetch } from './components/api/useFetch';
+import { SearchInput } from './components/SearchInput/SearchInput';
 
 function App() {
     const [data, setData] = useState(null);
@@ -21,23 +22,22 @@ function App() {
     return (
         <>
             <div>
-                <input
-                    type='text'
-                    placeholder='Search by name'
+                <SearchInput
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
+                <button onClick={() => setHideEpisode(!hideEpisode)}>
+                    {hideEpisode ? <p>Hide</p> : <p>Show</p>}
+                </button>
             </div>
-            <button onClick={() => setHideEpisode(!hideEpisode)}>
-                {hideEpisode ? <p>Hide</p> : <p>Show</p>}
-            </button>
+
             {isPending ? (
                 <div>Loading...</div>
             ) : isError ? (
                 <div>Error occurred while fetching data.</div>
             ) : (
                 data && (
-                    <Character
+                    <Characters
                         data={data}
                         isPending={isPending}
                         isError={isError}

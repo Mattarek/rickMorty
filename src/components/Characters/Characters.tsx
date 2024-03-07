@@ -1,13 +1,26 @@
+import { useState } from 'react';
 import { CharacterProps, IResults } from '../../types/Api';
+import { Character } from '../Character/Character';
 
-export const Character = ({
+export const Characters = ({
     isPending,
     isError,
     data,
     searchTerm,
     hideEpisode,
 }: CharacterProps) => {
-    console.log(data && data.results);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const itemsPerPage = data.results.length / 2;
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    const filteredData = data?.results?.filter((element) => {
+        const lowercaseName = element.name.toLowerCase();
+        const lowercaseSearchTerm = searchTerm.toLowerCase();
+        return lowercaseName.includes(lowercaseSearchTerm);
+    });
+    const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
     const extractEpisodeNumber = (episode: string) => {
         const matchResult = episode.match(/\/(\d+)$/);
@@ -21,13 +34,8 @@ export const Character = ({
             ) : isError ? (
                 <div>Error occurred while fetching data.</div>
             ) : (
-                data?.results
-                    ?.filter((element) => {
-                        const lowercaseName = element.name.toLowerCase();
-                        const lowercaseSearchTerm = searchTerm.toLowerCase();
-                        return lowercaseName.includes(lowercaseSearchTerm);
-                    })
-                    .map(
+                <>
+                    {currentItems.map(
                         ({
                             name,
                             id,
@@ -36,37 +44,30 @@ export const Character = ({
                             episode,
                             gender,
                         }: IResults) => (
-                            <li key={id}>
-                                <img
-                                    src={image}
-                                    alt='Image of character'
-                                />
-                                <div>{name}</div>
-                                <div>Gender: {gender}</div>
-                                <div>Species: {species}</div>
-                                {hideEpisode && (
-                                    <ul className='CharacterViews'>
-                                        Seen in episodes:{' '}
-                                        {episode.map((element, index) => (
-                                            <>
-                                                <li key={element}>
-                                                    {`${extractEpisodeNumber(
-                                                        element,
-                                                    )}${
-                                                        index <
-                                                        episode.length - 1
-                                                            ? ','
-                                                            : ''
-                                                    }`}
-                                                </li>
-                                            </>
-                                        ))}
-                                    </ul>
-                                )}
-                                <br />
-                            </li>
+                            <Character
+                                key={id}
+                                id={id}
+                                name={name}
+                                image={image}
+                                species={species}
+                                episode={episode}
+                                gender={gender}
+                                hideEpisode={hideEpisode}
+                                extractEpisodeNumber={extractEpisodeNumber}
+                            />
                         ),
-                    )
+                    )}
+                    {[1, 2].map((element) => (
+                        <button
+                            key={element}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setCurrentPage(element);
+                            }}>
+                            {element}
+                        </button>
+                    ))}
+                </>
             )}
         </ul>
     );
