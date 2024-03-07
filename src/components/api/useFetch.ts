@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
-import { UseFetchProps } from '../../types/Api';
 
-export const useFetch: UseFetchProps = (
-    url,
+export const useFetch = (
+    url: string,
     setData,
-    setIsPending,
-    setIsError,
+    setIsPending: (result: boolean) => void,
+    setIsError: (result: boolean) => void,
 ) => {
     useEffect(() => {
         setIsPending(true);
         const fetchData = async () => {
             try {
                 const response = await fetch(url);
-                const { results } = await response.json();
-                console.log(results);
-                setData(results);
+                const data = await response.json();
+                setData(data);
             } catch (error) {
                 setIsError(true);
                 throw error;
@@ -24,4 +22,6 @@ export const useFetch: UseFetchProps = (
         fetchData();
         setIsPending(false);
     }, [url]);
+
+    return;
 };

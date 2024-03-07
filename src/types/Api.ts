@@ -4,6 +4,19 @@ export interface IResults {
     image: string;
     species: string;
     episode: string[];
+    results: IResults[];
+}
+
+export interface CharacterResponse {
+    id: number;
+    name: string;
+    status: string;
+    species: string;
+    type: string;
+}
+
+export interface ResultsResponse {
+    results: CharacterResponse[];
 }
 
 export interface IData {
@@ -19,7 +32,7 @@ export interface CharacterProps {
 export interface UseFetchProps {
     (
         url: string,
-        setData: (data: [] | IData) => void,
+        setData: () => void,
         setIsPending: (isPending: boolean) => void,
         setIsError: (isError: boolean) => void,
     ): void;

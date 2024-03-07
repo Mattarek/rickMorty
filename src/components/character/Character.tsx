@@ -1,38 +1,45 @@
 import { CharacterProps, IResults } from '../../types/Api';
 
-export const Character = ({
-    isPending,
-    isError,
-    data: { results },
-}: CharacterProps) => {
+export const Character = ({ isPending, isError, data }: CharacterProps) => {
+    console.log(data && data.results);
+
+    const extractEpisodeNumber = (episode: string) => {
+        const matchResult = episode.match(/\/(\d+)$/);
+        return matchResult ? matchResult[1] : null;
+    };
+
     return (
-        <div>
+        <ul>
             {isPending ? (
                 <div>Loading...</div>
             ) : isError ? (
-                <div>Loading...</div>
+                <div>Error occurred while fetching data.</div>
             ) : (
-                results?.map(
-                    ({ name, id, image, species, episode }: IResults) => {
-                        return (
-                            <div key={id}>
-                                <div>{name}</div>
-                                <img
-                                    src={image}
-                                    alt=''
-                                />
-                                <div>{species}</div>
-                                <ul>
-                                    Seen in episodes:{' '}
-                                    {episode.map((element) => (
-                                        <li>{element[element.length - 1]}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        );
-                    },
+                data?.results?.map(
+                    ({ name, id, image, species, episode }: IResults) => (
+                        <li key={id}>
+                            <img
+                                src={image}
+                                alt='Image of character'
+                            />
+                            <div>{name}</div>
+                            <div>Species: {species}</div>
+                            <ul>
+                                Seen in episodes:{' '}
+                                {episode.map((element, index) => (
+                                    <li key={element}>
+                                        {`${extractEpisodeNumber(element)}${
+                                            index < episode.length - 1
+                                                ? ','
+                                                : ''
+                                        }`}
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    ),
                 )
             )}
-        </div>
+        </ul>
     );
 };
