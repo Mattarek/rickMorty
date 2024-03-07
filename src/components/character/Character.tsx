@@ -1,9 +1,15 @@
 import { CharacterProps } from '../../types/Api';
 
-export const Character = ({ isPending, data: { results } }: CharacterProps) => {
+export const Character = ({
+    isPending,
+    isError,
+    data: { results },
+}: CharacterProps) => {
     return (
         <div>
             {isPending ? (
+                <div>Loading...</div>
+            ) : isError ? (
                 <div>Loading...</div>
             ) : (
                 results?.map(({ name, id, image, species, episode }) => {
@@ -17,11 +23,9 @@ export const Character = ({ isPending, data: { results } }: CharacterProps) => {
                             <div>{species}</div>
                             <ul>
                                 Seen in episodes:{' '}
-                                {episode.map((element) => {
-                                    return (
-                                        <li>{element[element.length - 1]}</li>
-                                    );
-                                })}
+                                {episode.map((element) => (
+                                    <li>{element[element.length - 1]}</li>
+                                ))}
                             </ul>
                         </div>
                     );

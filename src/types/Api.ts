@@ -1,5 +1,6 @@
 export interface CharacterProps {
     isPending: boolean;
+    isError: boolean;
     data: {
         results: Array<{
             name: string;
