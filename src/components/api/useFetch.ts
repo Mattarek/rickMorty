@@ -22,6 +22,4 @@ export const useFetch = (
         fetchData();
         setIsPending(false);
     }, [url]);
-
-    return;
 };

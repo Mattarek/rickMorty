@@ -16,13 +16,21 @@ export const Character = ({ isPending, isError, data }: CharacterProps) => {
                 <div>Error occurred while fetching data.</div>
             ) : (
                 data?.results?.map(
-                    ({ name, id, image, species, episode }: IResults) => (
+                    ({
+                        name,
+                        id,
+                        image,
+                        species,
+                        episode,
+                        gender,
+                    }: IResults) => (
                         <li key={id}>
                             <img
                                 src={image}
                                 alt='Image of character'
                             />
                             <div>{name}</div>
+                            <div>Gender: {gender}</div>
                             <div>Species: {species}</div>
                             <ul>
                                 Seen in episodes:{' '}

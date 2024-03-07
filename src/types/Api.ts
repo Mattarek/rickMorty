@@ -5,18 +5,7 @@ export interface IResults {
     species: string;
     episode: string[];
     results: IResults[];
-}
-
-export interface CharacterResponse {
-    id: number;
-    name: string;
-    status: string;
-    species: string;
-    type: string;
-}
-
-export interface ResultsResponse {
-    results: CharacterResponse[];
+    gender: string;
 }
 
 export interface IData {
@@ -27,13 +16,4 @@ export interface CharacterProps {
     isPending: boolean;
     isError: boolean;
     data: IData;
-}
-
-export interface UseFetchProps {
-    (
-        url: string,
-        setData: () => void,
-        setIsPending: (isPending: boolean) => void,
-        setIsError: (isError: boolean) => void,
-    ): void;
 }
