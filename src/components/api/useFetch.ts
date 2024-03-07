@@ -11,11 +11,10 @@ export const useFetch = (url: string) => {
             try {
                 const response = await fetch(url);
                 const result = await response.json();
-                console.dir(result.results);
                 setData(result);
             } catch (error) {
-                console.error(error);
                 setIsError(true);
+                throw error;
             } finally {
                 setIsPending(false);
             }

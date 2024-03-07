@@ -1,8 +1,13 @@
 import './App.css';
 import { useFetch } from './components/api/useFetch';
-import { URLS } from './components/constant/api';
+import { Character } from './components/character/Character';
+import { URLS } from './constant/api';
 
 function App() {
+    const [data, setData] = useState(null);
+    const [isPending, setIsPending] = useState(true);
+    const [isError, setIsError] = useState(false);
+
     const { data, isPending, isError } = useFetch(URLS.API_URI_CHARACTERS);
 
     if (isError) {
@@ -15,22 +20,10 @@ function App() {
 
     return (
         <div>
-            {isPending ? (
-                <div>Loading...</div>
-            ) : (
-                data?.results?.map(({ name, id, image, species }) => {
-                    return (
-                        <div key={id}>
-                            <div>{name}</div>
-                            <img
-                                src={image}
-                                alt=''
-                            />
-                            <div>{species}</div>
-                        </div>
-                    );
-                })
-            )}
+            <Character
+                data={data}
+                isPending={isPending}
+            />
         </div>
     );
 }
