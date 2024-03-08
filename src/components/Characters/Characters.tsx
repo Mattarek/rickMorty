@@ -1,6 +1,14 @@
 import { useState } from 'react';
-import { CharacterProps, IResults } from '../../types/Api';
+import { IData, IResults } from '../../types/Api';
 import { Character } from '../Character/Character';
+
+export interface CharacterProps {
+    isPending: boolean;
+    isError: boolean;
+    data: IData;
+    searchTerm: string;
+    hideEpisode: boolean;
+}
 
 export const Characters = ({
     isPending,
@@ -10,6 +18,7 @@ export const Characters = ({
     hideEpisode,
 }: CharacterProps) => {
     const [currentPage, setCurrentPage] = useState(1);
+    const [isFiltered, setIsFiltered] = useState(false);
 
     const itemsPerPage = data.results.length / 2;
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -35,7 +44,10 @@ export const Characters = ({
                 <div>Error occurred while fetching data.</div>
             ) : (
                 <>
-                    {currentItems.map(
+                    <button onClick={() => setIsFiltered(!isFiltered)}>
+                        Filtruj
+                    </button>
+                    {(isFiltered ? currentItems : data.results).map(
                         ({
                             name,
                             id,
@@ -57,6 +69,7 @@ export const Characters = ({
                             />
                         ),
                     )}
+
                     {[1, 2].map((element) => (
                         <button
                             key={element}

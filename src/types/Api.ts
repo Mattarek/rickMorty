@@ -11,11 +11,3 @@ export interface IResults {
 export interface IData {
     results: IResults[];
 }
-
-export interface CharacterProps {
-    isPending: boolean;
-    isError: boolean;
-    data: IData;
-    searchTerm: string;
-    hideEpisode: boolean;
-}
