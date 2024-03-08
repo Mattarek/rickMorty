@@ -4,6 +4,7 @@ export const useFetch = (url: string) => {
     const [data, setData] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [pageCount, setPageCount] = useState(42);
 
     useEffect(() => {
         setIsPending(true);
@@ -11,6 +12,7 @@ export const useFetch = (url: string) => {
             try {
                 const response = await fetch(url);
                 const data = await response.json();
+                setPageCount(data?.info.pages);
                 setData(data);
             } catch (error) {
                 setIsError(true);
@@ -22,5 +24,5 @@ export const useFetch = (url: string) => {
         setIsPending(false);
     }, [url]);
 
-    return { data, isPending, isError };
+    return { data, isPending, isError, pageCount };
 };
