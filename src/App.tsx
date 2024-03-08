@@ -7,9 +7,6 @@ import { useFetch } from './components/api/useFetch';
 import { SearchInput } from './components/SearchInput/SearchInput';
 
 function App() {
-    const [data, setData] = useState(null);
-    const [isPending, setIsPending] = useState(false);
-    const [isError, setIsError] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [hideEpisode, setHideEpisode] = useState(false);
 
@@ -17,7 +14,7 @@ function App() {
         setSearchTerm(event.target.value);
     };
 
-    useFetch(URLS.API_URI_CHARACTERS, setData, setIsPending, setIsError);
+    const { data, isPending, isError } = useFetch(URLS.API_URI_CHARACTERS);
 
     return (
         <>
@@ -39,8 +36,6 @@ function App() {
                 data && (
                     <Characters
                         data={data}
-                        isPending={isPending}
-                        isError={isError}
                         searchTerm={searchTerm}
                         hideEpisode={hideEpisode}
                     />

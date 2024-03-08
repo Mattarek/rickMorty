@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export const useFetch = (
-    url: string,
-    setData,
-    setIsPending: (result: boolean) => void,
-    setIsError: (result: boolean) => void,
-) => {
+export const useFetch = (url: string) => {
+    const [data, setData] = useState(null);
+    const [isPending, setIsPending] = useState(false);
+    const [isError, setIsError] = useState(false);
+
     useEffect(() => {
         setIsPending(true);
         const fetchData = async () => {
@@ -22,4 +21,6 @@ export const useFetch = (
         fetchData();
         setIsPending(false);
     }, [url]);
+
+    return { data, isPending, isError };
 };

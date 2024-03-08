@@ -3,16 +3,12 @@ import { IData, IResults } from '../../types/Api';
 import { Character } from '../Character/Character';
 
 export interface CharacterProps {
-    isPending: boolean;
-    isError: boolean;
     data: IData;
     searchTerm: string;
     hideEpisode: boolean;
 }
 
 export const Characters = ({
-    isPending,
-    isError,
     data,
     searchTerm,
     hideEpisode,
@@ -38,50 +34,44 @@ export const Characters = ({
 
     return (
         <ul>
-            {isPending ? (
-                <div>Loading...</div>
-            ) : isError ? (
-                <div>Error occurred while fetching data.</div>
-            ) : (
-                <>
-                    <button onClick={() => setIsFiltered(!isFiltered)}>
-                        Filtruj
-                    </button>
-                    {(isFiltered ? currentItems : data.results).map(
-                        ({
-                            name,
-                            id,
-                            image,
-                            species,
-                            episode,
-                            gender,
-                        }: IResults) => (
-                            <Character
-                                key={id}
-                                id={id}
-                                name={name}
-                                image={image}
-                                species={species}
-                                episode={episode}
-                                gender={gender}
-                                hideEpisode={hideEpisode}
-                                extractEpisodeNumber={extractEpisodeNumber}
-                            />
-                        ),
-                    )}
+            <>
+                <button onClick={() => setIsFiltered(!isFiltered)}>
+                    Filtruj
+                </button>
+                {(isFiltered ? currentItems : data.results).map(
+                    ({
+                        name,
+                        id,
+                        image,
+                        species,
+                        episode,
+                        gender,
+                    }: IResults) => (
+                        <Character
+                            key={id}
+                            id={id}
+                            name={name}
+                            image={image}
+                            species={species}
+                            episode={episode}
+                            gender={gender}
+                            hideEpisode={hideEpisode}
+                            extractEpisodeNumber={extractEpisodeNumber}
+                        />
+                    ),
+                )}
 
-                    {[1, 2].map((element) => (
-                        <button
-                            key={element}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setCurrentPage(element);
-                            }}>
-                            {element}
-                        </button>
-                    ))}
-                </>
-            )}
+                {[1, 2].map((element) => (
+                    <button
+                        key={element}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            setCurrentPage(element);
+                        }}>
+                        {element}
+                    </button>
+                ))}
+            </>
         </ul>
     );
 };
