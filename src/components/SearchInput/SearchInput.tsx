@@ -1,11 +1,11 @@
-export const SearchInput = ({ value, onChange, onEnter }) => {
+export const SearchInput = ({ value, onChange, onKeyDown }) => {
     return (
         <input
             type='text'
             placeholder='Search by name'
             value={value}
             onChange={onChange}
-            onClick={onEnter}
+            onKeyDown={onKeyDown}
         />
     );
 };

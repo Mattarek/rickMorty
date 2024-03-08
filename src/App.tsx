@@ -1,14 +1,15 @@
-import './App.css';
-
 import { useState } from 'react';
-import { CharactersList } from './components/CharactersList';
+
 import { URLS } from './constant/api';
-import { useFetch } from './components/api/useFetch';
-import { SearchInput } from './components/SearchInput/SearchInput';
+import { useFetch } from './components/api/';
+import { CharactersList } from './components/CharactersList';
+import { SearchInput } from './components/SearchInput/';
+
+import './App.css';
 
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchingTerm, searchingTermTerm] = useState('');
+    const [onEnterPressValue, setOnEnterPressValue] = useState('');
     const [pageNumber, setPageNumber] = useState(1);
     const { data, isPending, isError, pageCount } = useFetch(
         `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
@@ -18,8 +19,10 @@ function App() {
         setSearchTerm(event?.target.value);
     };
 
-    const handleOnEnterEvent = (event) => {
-        if (event.key === 'Enter') searchingTermTerm(event?.target.value);
+    const handleKeyPress = (event) => {
+        if (event.code === 'Enter') {
+            setOnEnterPressValue(searchTerm);
+        }
     };
 
     return (
@@ -27,7 +30,7 @@ function App() {
             <SearchInput
                 value={searchTerm}
                 onChange={handleSearchChange}
-                onEnter={handleOnEnterEvent}
+                onKeyDown={handleKeyPress}
             />
 
             {isPending ? (
@@ -38,7 +41,7 @@ function App() {
                 data && (
                     <CharactersList
                         data={data}
-                        searchTerm={searchingTerm}
+                        searchTerm={onEnterPressValue}
                     />
                 )
             )}
