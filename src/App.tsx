@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
 import { URLS } from './constant/api';
-import { useFetch } from './components/api/';
+import { useFetch } from './utils/api';
 import { CharactersList } from './components/CharactersList';
 import { SearchInput } from './components/SearchInput/';
+import { handleKeyPress, handleSearchChange } from './utils/EventHandlers/';
 
 import './App.css';
 
@@ -11,26 +12,19 @@ function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [onEnterPressValue, setOnEnterPressValue] = useState('');
     const [pageNumber, setPageNumber] = useState(1);
+
     const { data, isPending, isError, pageCount } = useFetch(
         `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
     );
-
-    const handleSearchChange = (event) => {
-        setSearchTerm(event?.target.value);
-    };
-
-    const handleKeyPress = (event) => {
-        if (event.code === 'Enter') {
-            setOnEnterPressValue(searchTerm);
-        }
-    };
 
     return (
         <>
             <SearchInput
                 value={searchTerm}
-                onChange={handleSearchChange}
-                onKeyDown={handleKeyPress}
+                onChange={(event) => handleSearchChange(setSearchTerm, event)}
+                onKeyDown={(event) =>
+                    handleKeyPress(setOnEnterPressValue, searchTerm, event)
+                }
             />
 
             {isPending ? (

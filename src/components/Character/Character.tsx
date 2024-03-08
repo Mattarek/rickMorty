@@ -5,8 +5,7 @@ export const Character = ({ id, name, gender, species, image }) => {
                 src={image}
                 alt='Image of character'
             />
-            <div>{name}</div>
-            <div>Gender: {gender}</div>
+            <div>Name: {name}</div>
             <div>Species: {species}</div>
         </li>
     );
