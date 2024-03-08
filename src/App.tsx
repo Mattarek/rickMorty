@@ -1,7 +1,7 @@
 import './App.css';
 
 import { useState } from 'react';
-import { Characters } from './components/Characters';
+import { Characters } from './components/CharactersList';
 import { URLS } from './constant/api';
 import { useFetch } from './components/api/useFetch';
 import { SearchInput } from './components/SearchInput/SearchInput';
