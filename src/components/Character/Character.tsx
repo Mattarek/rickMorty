@@ -1,9 +1,9 @@
-export const Character = ({ id, name, gender, species, image }) => {
+export const Character = ({ id, name, species, avatarImg }) => {
     return (
         <li key={id}>
             <img
-                src={image}
-                alt='Image of character'
+                src={avatarImg}
+                alt={`Image of ${name}`}
             />
             <div>Name: {name}</div>
             <div>Species: {species}</div>

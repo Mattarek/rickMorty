@@ -27,30 +27,24 @@ function App() {
                 }
             />
 
-            {isPending ? (
-                <div>Loading...</div>
-            ) : isError ? (
-                <div>Error occurred while fetching data.</div>
-            ) : (
-                data && (
-                    <CharactersList
-                        data={data}
-                        searchTerm={onEnterPressValue}
-                    />
-                )
+            {data && (
+                <CharactersList
+                    isPending={isPending}
+                    isError={isError}
+                    data={data}
+                    searchTerm={onEnterPressValue}
+                />
             )}
             <button
-                onClick={() => {
-                    pageNumber > 1 ? setPageNumber(pageNumber - 1) : null;
-                }}>
+                onClick={() =>
+                    pageNumber < pageCount && setPageNumber(pageNumber - 1)
+                }>
                 Previous page
             </button>
             <button
-                onClick={() => {
-                    pageNumber < pageCount
-                        ? setPageNumber(pageNumber + 1)
-                        : null;
-                }}>
+                onClick={() =>
+                    pageNumber < pageCount && setPageNumber(pageNumber + 1)
+                }>
                 Next page
             </button>
         </>
