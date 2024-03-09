@@ -14,9 +14,7 @@ function App() {
     const [pageNumber, setPageNumber] = useState(1);
 
     const { data, isPending, isError, pageCount } = useFetch(
-        searchTerm
-            ? `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}`
-            : `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
+        `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
     );
 
     return (
@@ -28,7 +26,6 @@ function App() {
                     handleKeyPress(setOnEnterPressValue, searchTerm, event)
                 }
             />
-
             {data && (
                 <CharactersList
                     isPending={isPending}

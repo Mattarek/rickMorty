@@ -4,7 +4,6 @@ export interface IResults {
     image: string;
     species: string;
     episode: string[];
-    results: IResults[];
     gender: string;
 }
 
