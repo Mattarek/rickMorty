@@ -14,7 +14,9 @@ function App() {
     const [pageNumber, setPageNumber] = useState(1);
 
     const { data, isPending, isError, pageCount } = useFetch(
-        `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
+        searchTerm
+            ? `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}`
+            : `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
     );
 
     return (
@@ -36,15 +38,17 @@ function App() {
                 />
             )}
             <button
-                onClick={() =>
-                    pageNumber < pageCount && setPageNumber(pageNumber - 1)
-                }>
+                onClick={(e) => {
+                    e.preventDefault();
+                    1 < pageNumber && setPageNumber(pageNumber - 1);
+                }}>
                 Previous page
             </button>
             <button
-                onClick={() =>
-                    pageNumber < pageCount && setPageNumber(pageNumber + 1)
-                }>
+                onClick={(e) => {
+                    e.preventDefault();
+                    pageNumber < pageCount && setPageNumber(pageNumber + 1);
+                }}>
                 Next page
             </button>
         </>
