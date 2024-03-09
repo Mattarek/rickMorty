@@ -4,7 +4,7 @@ export const useFetch = (url: string) => {
     const [data, setData] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [pageCount, setPageCount] = useState(42);
+    const [pageCount, setPageCount] = useState<number>(1);
 
     useEffect(() => {
         setIsPending(true);
