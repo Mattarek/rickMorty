@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { URLS } from './constant/api';
 import { useFetch } from './utils/api';
@@ -22,12 +22,17 @@ function App() {
 
     const handleKeyPress = (event) => {
         if (event.code === 'Enter') {
-            console.log(pageNumber);
             setUrl(
                 `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
             );
         }
     };
+
+    useEffect(() => {
+        setUrl(
+            `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}&name=${searchTerm}`,
+        );
+    }, [pageNumber, searchTerm]);
 
     if (isPending) return <IsPending />;
     if (isError) return <IsError />;
