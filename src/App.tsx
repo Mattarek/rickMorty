@@ -5,10 +5,10 @@ import { useFetch } from './utils/api';
 import { CharactersList } from './components/CharactersList';
 import { SearchInput } from './components/SearchInput/';
 import { handleKeyPress, handleSearchChange } from './utils/EventHandlers/';
+import { IsPending } from './components/IsPending/';
+import { IsError } from './components/IsError/';
 
 import './App.css';
-import { IsPending } from './components/IsPending/IsPending';
-import { IsError } from './components/IsError/IsError';
 
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
