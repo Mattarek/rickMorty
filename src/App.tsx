@@ -7,6 +7,8 @@ import { SearchInput } from './components/SearchInput/';
 import { handleKeyPress, handleSearchChange } from './utils/EventHandlers/';
 
 import './App.css';
+import { IsPending } from './components/IsPending/IsPending';
+import { IsError } from './components/IsError/IsError';
 
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -26,13 +28,17 @@ function App() {
                     handleKeyPress(setOnEnterPressValue, searchTerm, event)
                 }
             />
-            {data && (
-                <CharactersList
-                    isPending={isPending}
-                    isError={isError}
-                    data={data}
-                    searchTerm={onEnterPressValue}
-                />
+            {isPending ? (
+                <IsPending />
+            ) : isError ? (
+                <IsError />
+            ) : (
+                data && (
+                    <CharactersList
+                        data={data}
+                        searchTerm={onEnterPressValue}
+                    />
+                )
             )}
             <button
                 onClick={(e) => {
