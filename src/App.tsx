@@ -14,7 +14,7 @@ function App() {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [url, setUrl] = useState<string>(URLS.API_URI_CHARACTERS);
 
-    const { data, isPending, isError, pageCount } = useFetch(url);
+    const { data, isPending, isError, pageCount } = useFetch(url, pageNumber);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event?.target.value);
@@ -22,9 +22,10 @@ function App() {
 
     const handleKeyPress = (event) => {
         if (event.code === 'Enter') {
-            setUrl(`${URLS.API_URI_CHARACTERS}/?name=${searchTerm}`);
-
-            console.log(data, isPending, isError, pageCount);
+            console.log(pageNumber);
+            setUrl(
+                `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
+            );
         }
     };
 

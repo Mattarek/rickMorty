@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useFetch = (url: string) => {
+export const useFetch = (url: string, pageNumber: number) => {
     const [data, setData] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -22,7 +22,7 @@ export const useFetch = (url: string) => {
 
         fetchData();
         setIsPending(false);
-    }, [url]);
+    }, [url, pageNumber]);
 
     return { data, isPending, isError, pageCount };
 };
