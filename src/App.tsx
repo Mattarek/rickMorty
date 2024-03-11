@@ -54,7 +54,12 @@ function App() {
             <button
                 onClick={(e) => {
                     e.preventDefault();
-                    pageNumber < pageCount && setPageNumber((prev) => prev + 1);
+                    pageNumber < pageCount &&
+                        setPageNumber((prev) => {
+                            console.log(prev);
+                            return ++prev;
+                        });
+                    console.log(pageNumber);
                     setUrl(
                         `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
                     );
