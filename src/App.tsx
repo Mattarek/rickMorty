@@ -14,7 +14,7 @@ function App() {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [url, setUrl] = useState<string>(URLS.API_URI_CHARACTERS);
 
-    const { data, isPending, isError, pageCount } = useFetch(url);
+    const { data, isPending, isError, pageCount } = useFetch(url, pageNumber);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event?.target.value);
