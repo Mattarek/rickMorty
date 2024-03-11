@@ -10,13 +10,14 @@ import { IsError } from './components/IsError/';
 import './App.css';
 
 function App() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [onEnterPressValue, setOnEnterPressValue] = useState('');
-    const [pageNumber, setPageNumber] = useState(1);
-
-    const { data, isPending, isError, pageCount } = useFetch(
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [onEnterPressValue, setOnEnterPressValue] = useState<string>('');
+    const [pageNumber, setPageNumber] = useState<number>(1);
+    const [url, setUrl] = useState<string>(
         `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
     );
+
+    const { data, isPending, isError, pageCount } = useFetch(url);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event?.target.value);
@@ -24,7 +25,10 @@ function App() {
 
     const handleKeyPress = (event) => {
         if (event.code === 'Enter') {
+            setUrl(`${URLS.API_URI_CHARACTERS}/?name=${onEnterPressValue}`);
             setOnEnterPressValue(searchTerm);
+
+            console.log(data, isPending, isError, pageCount);
         }
     };
 
@@ -38,10 +42,11 @@ function App() {
                 onChange={handleSearchChange}
                 onKeyDown={handleKeyPress}
             />
-            {data && <CharactersList data={data} />}
+            <CharactersList data={data} />
             <button
                 onClick={(e) => {
                     e.preventDefault();
+                    console.log(`${pageNumber} / ${pageCount}`);
                     1 < pageNumber && setPageNumber(pageNumber - 1);
                 }}>
                 Previous page
@@ -49,6 +54,7 @@ function App() {
             <button
                 onClick={(e) => {
                     e.preventDefault();
+                    console.log(`${pageNumber} / ${pageCount}`);
                     pageNumber < pageCount && setPageNumber(pageNumber + 1);
                 }}>
                 Next page
