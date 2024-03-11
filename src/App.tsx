@@ -28,6 +28,9 @@ function App() {
         }
     };
 
+    if (isPending) return <IsPending />;
+    if (isError) return <IsError />;
+
     return (
         <>
             <SearchInput
@@ -35,18 +38,7 @@ function App() {
                 onChange={handleSearchChange}
                 onKeyDown={handleKeyPress}
             />
-            {isPending ? (
-                <IsPending />
-            ) : isError ? (
-                <IsError />
-            ) : (
-                data && (
-                    <CharactersList
-                        data={data}
-                        searchTerm={onEnterPressValue}
-                    />
-                )
-            )}
+            {data && <CharactersList data={data} />}
             <button
                 onClick={(e) => {
                     e.preventDefault();
