@@ -4,7 +4,6 @@ import { URLS } from './constant/api';
 import { useFetch } from './utils/api';
 import { CharactersList } from './components/CharactersList';
 import { SearchInput } from './components/SearchInput/';
-import { handleKeyPress, handleSearchChange } from './utils/EventHandlers/';
 import { IsPending } from './components/IsPending/';
 import { IsError } from './components/IsError/';
 
@@ -19,14 +18,22 @@ function App() {
         `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
     );
 
+    const handleSearchChange = (event) => {
+        setSearchTerm(event?.target.value);
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.code === 'Enter') {
+            setOnEnterPressValue(searchTerm);
+        }
+    };
+
     return (
         <>
             <SearchInput
                 value={searchTerm}
-                onChange={(event) => handleSearchChange(setSearchTerm, event)}
-                onKeyDown={(event) =>
-                    handleKeyPress(setOnEnterPressValue, searchTerm, event)
-                }
+                onChange={handleSearchChange}
+                onKeyDown={handleKeyPress}
             />
             {isPending ? (
                 <IsPending />

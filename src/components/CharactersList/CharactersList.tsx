@@ -1,4 +1,6 @@
+import { URLS } from '../../constant/api';
 import { IData, IResults } from '../../types/Api';
+import { useFetch } from '../../utils/api';
 import { Character } from '../Character/';
 
 export interface CharacterProps {
@@ -7,7 +9,11 @@ export interface CharacterProps {
 }
 
 export const CharactersList = ({ data, searchTerm }: CharacterProps) => {
-    const filteredData = data?.results?.filter((element) => {
+    const { dataFilter } = useFetch(
+        `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}`,
+    );
+    console.log(dataFilter);
+    const filteredData = (dataFilter ?? data)?.results?.filter((element) => {
         const lowercaseName = element.name.toLowerCase();
         const lowercaseSearchTerm = searchTerm.toLowerCase();
         return lowercaseName.includes(lowercaseSearchTerm);

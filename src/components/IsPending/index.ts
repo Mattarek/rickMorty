@@ -1,1 +1,1 @@
-export * from './isPending';
+export * from './IsPending';
