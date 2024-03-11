@@ -11,11 +11,8 @@ import './App.css';
 
 function App() {
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [onEnterPressValue, setOnEnterPressValue] = useState<string>('');
     const [pageNumber, setPageNumber] = useState<number>(1);
-    const [url, setUrl] = useState<string>(
-        `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}`,
-    );
+    const [url, setUrl] = useState<string>(URLS.API_URI_CHARACTERS);
 
     const { data, isPending, isError, pageCount } = useFetch(url);
 
@@ -25,8 +22,7 @@ function App() {
 
     const handleKeyPress = (event) => {
         if (event.code === 'Enter') {
-            setUrl(`${URLS.API_URI_CHARACTERS}/?name=${onEnterPressValue}`);
-            setOnEnterPressValue(searchTerm);
+            setUrl(`${URLS.API_URI_CHARACTERS}/?name=${searchTerm}`);
 
             console.log(data, isPending, isError, pageCount);
         }
