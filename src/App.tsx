@@ -14,7 +14,7 @@ function App() {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [url, setUrl] = useState<string>(URLS.API_URI_CHARACTERS);
 
-    const { data, isPending, isError, pageCount } = useFetch(url, pageNumber);
+    const { data, isPending, isError, pageCount } = useFetch(url);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event?.target.value);
@@ -45,14 +45,19 @@ function App() {
                     e.preventDefault();
                     console.log(`${pageNumber} / ${pageCount}`);
                     1 < pageNumber && setPageNumber(pageNumber - 1);
+                    setUrl(
+                        `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
+                    );
                 }}>
                 Previous page
             </button>
             <button
                 onClick={(e) => {
                     e.preventDefault();
-                    console.log(`${pageNumber} / ${pageCount}`);
-                    pageNumber < pageCount && setPageNumber(pageNumber + 1);
+                    pageNumber < pageCount && setPageNumber((prev) => prev + 1);
+                    setUrl(
+                        `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
+                    );
                 }}>
                 Next page
             </button>
