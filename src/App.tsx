@@ -10,16 +10,9 @@ import { IsError } from './components/IsError/';
 import './App.css';
 
 function App() {
+    const [name, setName] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [onPressEnter, setOnPressEnter] = useState<string>('');
     const [pageNumber, setPageNumber] = useState<number>(1);
-    const [url, setUrl] = useState<string>(URLS.API_URI_CHARACTERS);
-
-    const { data, isPending, isError, pageCount } = useFetch(
-        url,
-        pageNumber,
-        onPressEnter,
-    );
 
     const handleSearchChange = (event) => {
         setSearchTerm(event?.target.value);
@@ -27,9 +20,16 @@ function App() {
 
     const handleKeyPress = (event) => {
         if (event.code === 'Enter') {
-            setOnPressEnter(searchTerm);
+            searchTerm === name ? null : setPageNumber(1);
+            setName(searchTerm);
         }
     };
+
+    const { data, isPending, isError, pageCount } = useFetch(
+        URLS.API_URI_CHARACTERS,
+        pageNumber,
+        name,
+    );
 
     if (isPending) return <IsPending />;
     if (isError) return <IsError />;
@@ -45,11 +45,7 @@ function App() {
             <button
                 onClick={(e) => {
                     e.preventDefault();
-                    console.log(`${pageNumber} / ${pageCount}`);
                     1 < pageNumber && setPageNumber(pageNumber - 1);
-                    setUrl(
-                        `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
-                    );
                 }}>
                 Previous page
             </button>
@@ -61,10 +57,6 @@ function App() {
                             console.log(prev);
                             return ++prev;
                         });
-                    console.log(pageNumber);
-                    setUrl(
-                        `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
-                    );
                 }}>
                 Next page
             </button>

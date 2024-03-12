@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useFetch = (
-    url: string,
-    pageNumber: number,
-    onPressEnter: string,
-) => {
+export const useFetch = (url: string, pageNumber: number, name: string) => {
     const [data, setData] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -13,10 +9,17 @@ export const useFetch = (
     useEffect(() => {
         const fetchData = async () => {
             let apiUrl = `${url}/?page=${pageNumber}`;
-            if (onPressEnter && onPressEnter !== '') {
-                apiUrl += `&name=${onPressEnter}`;
+
+            if (name && name !== '') {
+                if (apiUrl.includes('?')) {
+                    apiUrl += `&name=${name}`;
+                } else {
+                    apiUrl += `?name=${name}`;
+                }
             }
+
             setIsPending(true);
+
             try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
@@ -31,7 +34,7 @@ export const useFetch = (
         };
 
         fetchData();
-    }, [url, pageNumber, onPressEnter]);
+    }, [url, pageNumber, name]);
 
     return { data, isPending, isError, pageCount };
 };
