@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.css';
 import { Details } from './components/Details/Details.tsx';
-import { characterLoader } from './utils/api/characterLoader.ts';
+
+import './index.css';
 
 const router = createBrowserRouter([
     {
