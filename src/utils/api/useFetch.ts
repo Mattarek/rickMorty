@@ -12,23 +12,21 @@ export const useFetch = (
 
     useEffect(() => {
         const fetchData = async () => {
-            if (url) {
-                let apiUrl = `https://rickandmortyapi.com/api/character/?page=${pageNumber}`;
-                if (onPressEnter && onPressEnter !== '') {
-                    apiUrl += `&name=${onPressEnter}`;
-                }
-                setIsPending(true);
-                try {
-                    const response = await fetch(apiUrl);
-                    const data = await response.json();
-                    setPageCount(data?.info.pages);
-                    setData(data);
-                    setIsPending(false);
-                } catch (error) {
-                    setIsError(true);
-                    setIsPending(false);
-                    throw error;
-                }
+            let apiUrl = `https://rickandmortyapi.com/api/character/?page=${pageNumber}`;
+            if (onPressEnter && onPressEnter !== '') {
+                apiUrl += `&name=${onPressEnter}`;
+            }
+            setIsPending(true);
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                setPageCount(data?.info.pages);
+                setData(data);
+                setIsPending(false);
+            } catch (error) {
+                setIsError(true);
+                setIsPending(false);
+                throw error;
             }
         };
 
