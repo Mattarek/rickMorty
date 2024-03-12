@@ -28,9 +28,6 @@ function App() {
     const handleKeyPress = (event) => {
         if (event.code === 'Enter') {
             setOnPressEnter(searchTerm);
-            setUrl(
-                `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
-            );
         }
     };
 

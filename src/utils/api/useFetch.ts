@@ -12,7 +12,7 @@ export const useFetch = (
 
     useEffect(() => {
         const fetchData = async () => {
-            let apiUrl = `https://rickandmortyapi.com/api/character/?page=${pageNumber}`;
+            let apiUrl = `${url}/?page=${pageNumber}`;
             if (onPressEnter && onPressEnter !== '') {
                 apiUrl += `&name=${onPressEnter}`;
             }
