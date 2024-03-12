@@ -11,17 +11,17 @@ import './App.css';
 
 function App() {
     const [name, setName] = useState<string>('');
-    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [searchName, setSearchName] = useState<string>('');
     const [pageNumber, setPageNumber] = useState<number>(1);
 
     const handleSearchChange = (event) => {
-        setSearchTerm(event?.target.value);
+        setSearchName(event?.target.value);
     };
 
     const handleKeyPress = (event) => {
         if (event.code === 'Enter') {
-            searchTerm === name ? null : setPageNumber(1);
-            setName(searchTerm);
+            searchName !== name && setPageNumber(1);
+            setName(searchName);
         }
     };
 
@@ -37,7 +37,7 @@ function App() {
     return (
         <>
             <SearchInput
-                value={searchTerm}
+                value={searchName}
                 onChange={handleSearchChange}
                 onKeyDown={handleKeyPress}
             />

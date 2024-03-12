@@ -8,17 +8,15 @@ export const useFetch = (url: string, pageNumber: number, name: string) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setIsPending(true);
+
             let apiUrl = `${url}/?page=${pageNumber}`;
 
             if (name && name !== '') {
                 if (apiUrl.includes('?')) {
                     apiUrl += `&name=${name}`;
-                } else {
-                    apiUrl += `?name=${name}`;
                 }
             }
-
-            setIsPending(true);
 
             try {
                 const response = await fetch(apiUrl);
@@ -28,8 +26,9 @@ export const useFetch = (url: string, pageNumber: number, name: string) => {
                 setIsPending(false);
             } catch (error) {
                 setIsError(true);
-                setIsPending(false);
                 throw error;
+            } finally {
+                setIsPending(false);
             }
         };
 
