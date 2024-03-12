@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { URLS } from './constant/api';
 import { useFetch } from './utils/api';
@@ -11,10 +11,15 @@ import './App.css';
 
 function App() {
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [onPressEnter, setOnPressEnter] = useState<string>('');
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [url, setUrl] = useState<string>(URLS.API_URI_CHARACTERS);
 
-    const { data, isPending, isError, pageCount } = useFetch(url, pageNumber);
+    const { data, isPending, isError, pageCount } = useFetch(
+        url,
+        pageNumber,
+        onPressEnter,
+    );
 
     const handleSearchChange = (event) => {
         setSearchTerm(event?.target.value);
@@ -22,17 +27,12 @@ function App() {
 
     const handleKeyPress = (event) => {
         if (event.code === 'Enter') {
+            setOnPressEnter(searchTerm);
             setUrl(
                 `${URLS.API_URI_CHARACTERS}/?name=${searchTerm}&page=${pageNumber}`,
             );
         }
     };
-
-    useEffect(() => {
-        setUrl(
-            `${URLS.API_URI_CHARACTERS}/?page=${pageNumber}&name=${searchTerm}`,
-        );
-    }, [pageNumber, searchTerm]);
 
     if (isPending) return <IsPending />;
     if (isError) return <IsError />;

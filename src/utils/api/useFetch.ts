@@ -1,28 +1,39 @@
 import { useEffect, useState } from 'react';
 
-export const useFetch = (url: string, pageNumber: number) => {
+export const useFetch = (
+    url: string,
+    pageNumber: number,
+    onPressEnter: string,
+) => {
     const [data, setData] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const [isError, setIsError] = useState(false);
     const [pageCount, setPageCount] = useState<number>(1);
 
     useEffect(() => {
-        setIsPending(true);
         const fetchData = async () => {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                setPageCount(data?.info.pages);
-                setData(data);
-            } catch (error) {
-                setIsError(true);
-                throw error;
+            if (url) {
+                let apiUrl = `https://rickandmortyapi.com/api/character/?page=${pageNumber}`;
+                if (onPressEnter && onPressEnter !== '') {
+                    apiUrl += `&name=${onPressEnter}`;
+                }
+                setIsPending(true);
+                try {
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    setPageCount(data?.info.pages);
+                    setData(data);
+                    setIsPending(false);
+                } catch (error) {
+                    setIsError(true);
+                    setIsPending(false);
+                    throw error;
+                }
             }
         };
 
         fetchData();
-        setIsPending(false);
-    }, [url, pageNumber]);
+    }, [url, pageNumber, onPressEnter]);
 
     return { data, isPending, isError, pageCount };
 };
