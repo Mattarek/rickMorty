@@ -8,6 +8,10 @@ import './index.css';
 
 const router = createBrowserRouter([
     {
+        path: '',
+        element: <App />,
+    },
+    {
         path: 'details/:id',
         element: <Details />,
         loader: ({ params }) => {
@@ -15,10 +19,6 @@ const router = createBrowserRouter([
                 `https://rickandmortyapi.com/api/character/${params.id}`,
             );
         },
-    },
-    {
-        path: '',
-        element: <App />,
     },
 ]);
 

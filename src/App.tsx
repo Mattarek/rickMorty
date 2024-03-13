@@ -52,11 +52,7 @@ function App() {
             <button
                 onClick={(e) => {
                     e.preventDefault();
-                    pageNumber < pageCount &&
-                        setPageNumber((prev) => {
-                            console.log(prev);
-                            return ++prev;
-                        });
+                    pageNumber < pageCount && setPageNumber((prev) => ++prev);
                 }}>
                 Next page
             </button>

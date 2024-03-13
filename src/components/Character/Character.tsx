@@ -1,9 +1,6 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Character = ({ id, name, species, avatarImg }) => {
-    console.log(id, name, species, avatarImg);
-    const param = useParams();
-    console.log(param);
     return (
         <Link to={`/details/${id}`}>
             <li key={id}>
