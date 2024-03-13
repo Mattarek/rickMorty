@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { URLS } from '../../constant/api';
-import { useEffect, useState } from 'react';
+import { Episodes } from '../Episodes/';
+import { Gender } from '../Gender/Gender';
 
 interface DataLoader {
     name: string;
@@ -68,18 +70,11 @@ export const Details = () => {
                     />
                     <div>
                         <div>
-                            {gender === 'Female' ? (
-                                <span>Wystąpiła</span>
-                            ) : (
-                                <span>Wystąpił</span>
-                            )}{' '}
-                            w odcinku:{' '}
+                            <Gender gender={gender} />
                         </div>
 
                         <ul>
-                            {data?.map(({ episode, name }) => (
-                                <li key={name}>{`${episode}: ${name}`}</li>
-                            ))}
+                            <Episodes data={data} />
                         </ul>
                     </div>
                 </li>
