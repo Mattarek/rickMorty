@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { URLS } from '../../constant/api';
 import { Episodes } from '../Episodes/';
 import { Gender } from '../Gender/Gender';
+import { prepareUrl } from '../../utils/api/UrlPrepareTool';
 
 interface DataLoader {
     name: string;
@@ -26,25 +27,20 @@ export const Details = () => {
         | undefined
     >();
 
-    const { name, image, episode, gender, location, status } =
-        useLoaderData() as DataLoader;
+    const {
+        name,
+        image,
+        episode,
+        gender,
+        location: { name: nameLocation },
+        status,
+    } = useLoaderData() as DataLoader;
 
-    const characterEpisodes = episode.map((element) =>
-        parseInt(element.split('episode/')[1]),
-    );
-
-    const episodesString = characterEpisodes.reduce((acc, current, index) => {
-        if (index === 0) {
-            return current.toString();
-        } else {
-            const previousNumber = characterEpisodes[index - 1];
-            if (current - previousNumber === 1) {
-                return `${acc},${current}`;
-            } else {
-                return `${acc},${previousNumber + 1},${current}`;
-            }
-        }
-    }, '');
+    const episodesString = prepareUrl(episode);
+    const navigate = useNavigate();
+    const handleGoBack = () => {
+        navigate(-1); // Wraca do poprzedniej strony
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,26 +59,20 @@ export const Details = () => {
                 <li>
                     <div>Imie: {name}</div>
                     <div>Status: {status}</div>
-                    <div>{location.name}</div>
+                    <div>{nameLocation}</div>
                     <img
                         src={image}
                         alt={`Photo of ${name}`}
                     />
-                    <div>
-                        <div>
-                            <Gender gender={gender} />
-                        </div>
-
-                        <ul>
-                            <Episodes data={data} />
-                        </ul>
-                    </div>
+                    <br />
+                    <Gender gender={gender} />
+                    <Episodes data={data} />
                 </li>
             </ul>
             <div>
-                <Link to='/'>
+                <button onClick={handleGoBack}>
                     <FaArrowLeft /> Powrót
-                </Link>
+                </button>
             </div>
         </>
     );
