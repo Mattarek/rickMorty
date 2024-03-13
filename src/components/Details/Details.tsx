@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { URLS } from '../../constant/api';
 import { Episodes } from '../Episodes/';
@@ -26,6 +26,8 @@ export const Details = () => {
           }>
         | undefined
     >();
+
+    const { pageNumber } = useParams();
 
     const {
         name,

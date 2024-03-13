@@ -6,7 +6,7 @@ export interface CharacterProps {
     searchTerm: string;
 }
 
-export const CharactersList = ({ data }) => {
+export const CharactersList = ({ data, pageNumber }) => {
     return (
         <ul>
             {data?.results.map(({ name, id, image, species }: IResults) => (
@@ -16,6 +16,7 @@ export const CharactersList = ({ data }) => {
                     name={name}
                     avatarImg={image}
                     species={species}
+                    pageNumber={pageNumber}
                 />
             ))}
         </ul>

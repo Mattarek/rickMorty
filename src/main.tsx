@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Navigate,
+} from 'react-router-dom';
 import { Details } from './components/Details/Details.tsx';
 
 import './index.css';
@@ -9,10 +13,24 @@ import './index.css';
 const router = createBrowserRouter([
     {
         path: '',
-        element: <App />,
+        element: (
+            <Navigate
+                to='page/1'
+                replace
+            />
+        ),
     },
     {
-        path: 'details/:id',
+        path: 'page/:pageNumber',
+        element: <App />,
+        loader: ({ params: { pageNumber } }) => {
+            return fetch(
+                `https://rickandmortyapi.com/api/character/?page=${pageNumber}`,
+            );
+        },
+    },
+    {
+        path: 'page/:pageNumber/character/:id',
         element: <Details />,
         loader: ({ params: { id } }) => {
             return fetch(`https://rickandmortyapi.com/api/character/${id}`);
