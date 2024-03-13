@@ -39,7 +39,7 @@ export const Details = () => {
     const episodesString = prepareUrl(episode);
     const navigate = useNavigate();
     const handleGoBack = () => {
-        navigate(-1); // Wraca do poprzedniej strony
+        navigate(-1);
     };
 
     useEffect(() => {

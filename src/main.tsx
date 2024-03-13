@@ -14,10 +14,8 @@ const router = createBrowserRouter([
     {
         path: 'details/:id',
         element: <Details />,
-        loader: ({ params }) => {
-            return fetch(
-                `https://rickandmortyapi.com/api/character/${params.id}`,
-            );
+        loader: ({ params: { id } }) => {
+            return fetch(`https://rickandmortyapi.com/api/character/${id}`);
         },
     },
 ]);
