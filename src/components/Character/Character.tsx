@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export const Character = ({ id, name, species, avatarImg }) => {
     return (
         <Link to={`/details/${id}`}>
-            <li key={id}>
+            <li>
                 <img
                     src={avatarImg}
                     alt={`Image of ${name}`}
